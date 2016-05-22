@@ -26,9 +26,7 @@ When using a different name for the Web Application, change its name in:
 
 ```html
 <IfModule alias_module>
-
     Alias /slim-template /path/to/slim-allinone-template/app
-
 </IfModule>
 ```
 
@@ -37,17 +35,11 @@ When using a different name for the Web Application, change its name in:
 
 ```html
 <Directory "/path/to/slim-allinone-template/app">
-
         # Not in Document Root so conf/, logs/ etc... won't be availabe via web server
-
         Options -Indexes
-
         AllowOverride All
-
         Order allow,deny
-
         Allow from all
-
 </Directory>
 ```
 
