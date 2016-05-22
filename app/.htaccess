@@ -1,0 +1,9 @@
+php_value date.timezone "America/Sao_Paulo"
+
+RewriteEngine On
+RewriteBase /slim-template/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(/slim-template/index\.php/(.+))$ $1?/$2 [L,NC,QSA]
+RewriteRule . /slim-template/index.php [L]

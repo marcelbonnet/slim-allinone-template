@@ -1,0 +1,85 @@
+{% set root = uri|split('/')[1] %}
+{% if root is empty %}
+    {% set home_active = "active" %}
+{% elseif root == "config" %}
+    {% set config_active = "active" %}
+{% elseif root == "img" %}
+    {% set photos_active = "active" %}
+{% endif %}
+
+{% if usericon == 0 %}
+    {% set usericon_class="hide" %}
+    {% set span_user_class="glyphicon glyphicon-user" %}
+{% endif %}
+<NAV>
+	<!-- Fixed navbar
+    cores: navbar-[default|inverse]
+    navbar-fixed-top|navbar-static-top|[vazio]|
+     -->
+	<div class="navbar navbar-default col-xs-12 col-md-12"
+		role="navigation">
+		<div class="container col-xs-12 col-md-12">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{{base_url()}}/">
+				    {% include "app_name" %}
+                    <span
+					class="small label label-default">{% include 'release' %}</span> <span
+					class="small label label-warning">{% include 'release_name'
+						%}</span>
+				</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="{{home_active}}"><a href="{{base_url()}}/home">Home</a></li>
+					
+					<li class="dropdown {{config_active}}"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown">Menu<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="{{photos_active}}"><a
+								href="{{path_for('hello')}}/paul">Hello, Paul</a></li>
+							<li class="{{photos_active}}"><a
+								href="{{path_for('hello')}}/john">Hello, John</a></li>
+							
+							<li class="divider"></li>
+							<li class="{{photos_active}}"><a
+								href="{{path_for('hello')}}/george">Hello, George</a></li>
+							<li class="{{photos_active}}"><a
+								href="{{path_for('hello')}}/starkey">Hello, Starkey</a></li>
+							
+							<li class="divider"></li>
+							<li class="{{photos_active}}"><a
+                                href="{{path_for('hello')}}">Menu Item</a></li>
+							<li class="{{photos_active}}"><a
+								href="{{path_for('hello')}}">Menu Item</a></li>
+						</ul>
+					</li>
+
+
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right dropdown">
+					<a href="#" class="dropdown-toggle label label-primary"
+						data-toggle="dropdown"> User Name {{username}} </a>
+				</ul>
+				<ul class="nav navbar-nav navbar-right col-lg-3">
+					<div class="input-group">
+					   <span class="glyphicon glyphicon-search input-group-addon"></span>
+						<input type="text" name="searchTerm" class="form-control"
+							placeholder="Procurar por..."> <span
+							class="input-group-btn">
+						</span>
+					</div>
+					<!-- /input-group -->
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+</NAV>

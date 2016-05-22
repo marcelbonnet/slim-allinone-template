@@ -1,0 +1,24 @@
+{% extends "page.html" %}
+{% block pagecontent %}
+    {# #### NAV/MENU  #####}
+    {% include "nav.html" %}
+
+    <div id="logger" class="scroller" style="position:fixed; z-index:1000; width:80%" role="alert"><!-- div used to log the message stack --></div>
+
+    <ARTICLE>
+        {% block content %}
+        {% if isMobile %}
+        <div class="alert alert-warning">
+	         <p><strong>Mobile User Advice</strong>: you are using a mobile device, so listen to this advice...</p>
+        </div>
+        {% endif %}
+        <div class="jumbotron">
+            <div class="container">
+                <h3>Foo</h3>
+                <p>bar baz</p>
+            </div>
+        </div>
+        
+        {% endblock %}
+    </ARTICLE>
+{% endblock %}

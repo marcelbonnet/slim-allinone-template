@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- jquery -->
+<link rel="stylesheet" href="{{base_url()}}/res/jquery-ui-1.11.4.custom/jquery-ui.min.css">
+<script src="{{base_url()}}/res/jquery-2.1.4.min.js"></script>
+<script src="{{base_url()}}/res/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+
+<!-- select2 -->
+<link rel="stylesheet" href="{{base_url()}}/res/select2-4.0.0/dist/css/select2.min.css">
+<script src="{{base_url()}}/res/select2-4.0.0/dist/js/select2.full.min.js"></script>
+
+<!-- Moment.js -->
+<script src="{{base_url()}}/res/moment/moment-with-locales.min.js"></script>
+
+<!-- MB -->
+<script src="{{base_url()}}/res/mb/logger.js"></script>
+
+<!-- bootstrap -->
+<link href="{{base_url()}}/res/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{base_url()}}/res/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<script src="{{base_url()}}/res/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- bootstrap-validator http://1000hz.github.io/bootstrap-validator/ -->
+<script src="{{base_url()}}/res/bootstrap-validator/validator-0.10.2-DARTH-VALIDATOR.js"></script>
+
+<!-- data tables -->
+<link rel="stylesheet" type="text/css" href="{{base_url()}}/res/datatables/datatables.min.css"/>
+<script type="text/javascript" src="{{base_url()}}/res/datatables/datatables.min.js"></script>
+
+<!-- jQuery.SOAP e xml2json -->
+<script type="text/javascript" src="{{base_url()}}/res/jquery.soap.js"></script>
+<script type="text/javascript" src="{{base_url()}}/res/xml2json.js"></script>
+
+<!-- constantes JS da aplicação -->
+<script src="{{base_url()}}/templates/res/constantes.js"></script>
+
+<script>
+var logger;//instância da classe Logger para mostrar mensagens na view dentro de um DIV
+$(document).ready(function(){
+    $("#logger").hide();
+    logger = new Logger("logger");
+    
+});
+
+//keeps the logger div at the top of the viewable page
+$(window).scroll(function(e) {
+    // Get the position of the location where the scroller starts.
+    if ( $(".scroller_anchor").length == 0 ) return;
+
+    var scroller_anchor = $(".scroller_anchor").offset().top;
+    
+    // Check if the user has scrolled and the current position is after the scroller's start location and if its not already fixed at the top 
+    if ($(this).scrollTop() >= scroller_anchor && $('.scroller').css('position') != 'fixed') 
+    {    // Change the CSS of the scroller to hilight it and fix it at the top of the screen.
+        $('.scroller').css({
+			'position': 'fixed',
+			'display':'none',
+            'top': '0px',
+            'z-index':'1000'
+        });
+        // Changing the height of the scroller anchor to that of scroller so that there is no change in the overall height of the page.
+        $('.scroller_anchor').css('height', '50px');
+    } 
+    else if ($(this).scrollTop() < scroller_anchor && $('.scroller').css('position') != 'relative') 
+    {    // If the user has scrolled back to the location above the scroller anchor place it back into the content.
+        
+        // Change the height of the scroller anchor to 0 and now we will be adding the scroller back to the content.
+        $('.scroller_anchor').css('height', '0px');
+        
+        // Change the CSS and put it back to its original position.
+        $('.scroller').css({
+            'background': '#7fcd98',
+            'border': '1px solid #000',
+            'position': 'relative'
+        });
+    }
+});
+</script>
+
+<script>
+{#% include 'res/somefile.js' %#}
+</script>
+
+<TITLE>{{title}}</TITLE>
+</head>
+<body>
+    {% block pagecontent %}
+
+    {% endblock %}
+    <footer>
+        &copy;2016 | Slim All In One Template
+    </footer>
+</body>
+
+
+</html>
