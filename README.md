@@ -24,15 +24,19 @@ When using a different name for the Web Application, change its name in:
 
 ## Apache 2.2 httpd.conf:
 
-&lt;IfModule alias_module&gt;
+```html
+<IfModule alias_module>
 
     Alias /slim-template /path/to/slim-allinone-template/app
 
-&lt;/IfModule&gt;
+</IfModule>
+```
 
-NOTE: the Directory should not be in Document Root, because we are trying to protect the App's conf and logs directories 
 
-&lt;Directory "/path/to/slim-allinone-template/app"&gt;
+**NOTE: the Directory should not be in Document Root, because we are trying to protect the App's conf and logs directories** 
+
+```html
+<Directory "/path/to/slim-allinone-template/app">
 
         # Not in Document Root so conf/, logs/ etc... won't be availabe via web server
 
@@ -44,7 +48,8 @@ NOTE: the Directory should not be in Document Root, because we are trying to pro
 
         Allow from all
 
-&lt;/Directory&gt;
+</Directory>
+```
 
 # MVC
 
