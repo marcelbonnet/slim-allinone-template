@@ -10,7 +10,8 @@
         "monolog/monolog": "^1.18.2",
         "mobiledetect/mobiledetectlib" : "^2.8.22",
         "zguillez/slim-mobile-detect": "^1.0.0",
-        "pavlakis/slim-cli" : "^1.0.0"
+        "pavlakis/slim-cli" : "^1.0.0",
+        "jeremykendall/slim-auth" : "^2.0.0-alpha"
     }
    ,"autoload": {
         "psr-4": {

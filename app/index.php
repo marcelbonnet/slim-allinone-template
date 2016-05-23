@@ -10,6 +10,14 @@ use \Slim\Http\Response as SlimHttpResponse;
 use DarthEv\Core\ErrorLoggerHandler;
 use DarthEv\Core\app\App;
 use DarthEv\Core\app\ControllerArgsStrategy;
+use JeremyKendall\Password\PasswordValidator;
+use JeremyKendall\Slim\Auth\Adapter\Db\PdoAdapter;
+use DarthEv\core\app\Bootstrap;
+use DarthEv\Core\app\Acl;
+use Zend\Session\Config\SessionConfig;
+use Zend\Session\SessionManager;
+use JeremyKendall\Slim\Auth\ServiceProvider\SlimAuthProvider;
+use Zend\Authentication\Storage\Session as SessionStorage;
 
 require_once 'vendor/autoload.php';
 
@@ -25,6 +33,47 @@ $app = new \Slim\App($config);
 
 // Fetch DI Container
 $container = $app->getContainer();
+
+
+/* ****************************************************************************
+ * ACL
+ * ****************************************************************************
+ */
+// Configure Slim Auth components
+$options = array(
+		\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+		\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+);
+$validator = new PasswordValidator();
+$adapter = new PdoAdapter( (new \PDO("mysql:host=localhost;port=3306;dbname=slim_allinone_orm", "marcelbonnet", "" )) 
+		, 'users', 'username', 'password', $validator);
+
+$acl = new Acl();
+
+$slimAuthProvider = new SlimAuthProvider();
+$slimAuthProvider->register($container);
+
+$sessionConfig = new SessionConfig();
+$sessionConfig->setOptions(array(
+		'remember_me_seconds' => 60 * 60 * 24 * 7,
+		'name' => 'slim-auth-impl',
+));
+$sessionManager = new SessionManager($sessionConfig);
+$sessionManager->rememberMe();
+$storage = new SessionStorage('slim_auth', null, $sessionManager);
+
+$container["authAdapter"] = $adapter;
+$container["authStorage"] = $storage;
+
+$authenticator = $container["authenticator"];
+$authTeste = $authenticator->authenticate("foobar","teste");
+
+var_dump($authTeste);
+var_dump( (new PasswordValidator())->rehash('teste') );
+
+// $authBootstrap = new Bootstrap($app, $adapter, $acl);
+// $authBootstrap->setStorage($storage);
+// $authBootstrap->bootstrap();
 
 /* ****************************************************************************
  * Twig View helper
