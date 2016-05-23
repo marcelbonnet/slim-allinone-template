@@ -15,3 +15,4 @@ Route::get('/home', function (SlimHttpRequest $request, SlimHttpResponse $respon
 
 
 Route::get('/hello[/{name}]', 'DarthEv\Core\ctrl\CoreController:sayHello')->setName('hello');
+Route::get('/protected', 'DarthEv\Core\ctrl\CoreController:callProtectedResource')->setName('protected');

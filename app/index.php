@@ -18,6 +18,8 @@ use Zend\Session\Config\SessionConfig;
 use Zend\Session\SessionManager;
 use JeremyKendall\Slim\Auth\ServiceProvider\SlimAuthProvider;
 use Zend\Authentication\Storage\Session as SessionStorage;
+use JeremyKendall\Slim\Auth\Middleware\Authorization;
+use JeremyKendall\Slim\Auth\Handlers\RedirectHandler;
 
 require_once 'vendor/autoload.php';
 
@@ -45,7 +47,7 @@ $options = array(
 		\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
 );
 $validator = new PasswordValidator();
-$adapter = new PdoAdapter( (new \PDO("mysql:host=localhost;port=3306;dbname=slim_allinone_orm", "marcelbonnet", "" )) 
+$adapter = new PdoAdapter( (new \PDO("mysql:host=localhost;port=3306;dbname=slim_allinone_orm", "marcelbonnet", "" ))
 		, 'users', 'username', 'password', $validator);
 
 $acl = new Acl();
@@ -65,15 +67,15 @@ $storage = new SessionStorage('slim_auth', null, $sessionManager);
 $container["authAdapter"] = $adapter;
 $container["authStorage"] = $storage;
 
+#remove it from here, belongs to login route:
 $authenticator = $container["authenticator"];
 $authTeste = $authenticator->authenticate("foobar","teste");
+// var_dump($authTeste);
+// var_dump( (new PasswordValidator())->rehash('teste') );
 
-var_dump($authTeste);
-var_dump( (new PasswordValidator())->rehash('teste') );
+$app->add(new Authorization( $container["auth"], $acl, new RedirectHandler("auth/notAuthenticated", "auth/notAuthorized") ));
 
-// $authBootstrap = new Bootstrap($app, $adapter, $acl);
-// $authBootstrap->setStorage($storage);
-// $authBootstrap->bootstrap();
+
 
 /* ****************************************************************************
  * Twig View helper
@@ -194,6 +196,7 @@ App::setup($app);
  * Routes
  */
 require_once "routes.php";
+require_once "routes-auth.php";
 require_once "routes-cli.php";
 require_once "routes-api.php";
 require_once "routes-middleware.php";

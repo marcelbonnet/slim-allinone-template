@@ -7,6 +7,7 @@ use \Slim\Http\Response as SlimHttpResponse;
 use DarthEv\Core\app\Controller;
 use DarthEv\Core\cmd\HomeCommand;
 use DarthEv\Core\cmd\HelloCommand;
+use DarthEv\Core\cmd\ProtectedPageCommand;
 
 /**
  * Controlador para funções de entrada ou de primeiro nível da aplicação
@@ -36,6 +37,17 @@ class CoreController extends Controller {
 	{
 		try {
 			$cmd = new HelloCommand($request, $response, $args);
+			$cmd->process();
+			$cmd->respondWithHtml();
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+	
+	public static function callProtectedResource(SlimHttpRequest $request, SlimHttpResponse $response, $args)
+	{
+		try {
+			$cmd = new ProtectedPageCommand($request, $response, $args);
 			$cmd->process();
 			$cmd->respondWithHtml();
 		} catch (Exception $e) {

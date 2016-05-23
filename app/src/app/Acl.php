@@ -2,6 +2,7 @@
 namespace DarthEv\Core\app;
 
 use Zend\Permissions\Acl\Acl as ZendAcl;
+use Zend\Permissions\Acl\Resource\GenericResource;
 
 /**
  * ACL for Slim Auth Implementation Example.
@@ -26,6 +27,10 @@ class Acl extends ZendAcl
 		$this->addResource('/member');
 		$this->addResource('/admin');
 		$this->addResource('/hello');
+		
+		$this->addResource('/protected');
+		$this->addResource('/auth/notAuthenticated');
+		$this->addResource('/auth/notAuthorized');
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
 		// The third argument is 'privilege'. In Slim Auth privilege == HTTP method
@@ -33,7 +38,11 @@ class Acl extends ZendAcl
 		$this->allow('guest', '/login', array('GET', 'POST'));
 		$this->allow('guest', '/logout', $this->defaultPrivilege);
 		$this->allow('member', '/member', $this->defaultPrivilege);
-		$this->allow('member', '/hello', $this->defaultPrivilege);
+		
+		$this->allow('guest', '/auth/notAuthenticated' , $this->defaultPrivilege);
+		$this->allow('guest', '/auth/notAuthorized' , $this->defaultPrivilege);
+		$this->allow('admin', '/protected' , $this->defaultPrivilege);
+		
 		// This allows admin access to everything
 		$this->allow('admin');
 	}
