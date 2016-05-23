@@ -2,6 +2,8 @@ This is a template for Slim Framework 3.x that I use in my projects. It covers
 various Slim extensions that seems to suite my needs, and probably yours: error handling and
 logging, debug to a file, custom 404, authentication, authorization, ORM (Doctrine) ...
 
+Added jeremykendall/slim-auth to support Zend Authentication and Acls. Commit 6c7cb6c85002a87e31f0a3c46152896a76901f6e is a working example. See required MySQL instructions in the same git log revision.
+
 It uses Twig as template.
 
 It has some core files to code a clean MVC application.
