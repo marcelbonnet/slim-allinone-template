@@ -6,14 +6,19 @@ use \Slim\Http\Request as SlimHttpRequest;
 use \Slim\Http\Response as SlimHttpResponse;
 use DarthEv\Core\app\Route;
 use DarthEv\Core\app\App;
+use JeremyKendall\Password\PasswordValidator;
 
 
 Route::group('/auth', function() {
 	Route::get('/notAuthenticated', function (SlimHttpRequest $request, SlimHttpResponse $response, $args) {
-		return $response
-		->withStatus(401)
-		->withHeader('Content-Type', 'text/html;charset=utf-8')
-		->write('You are not authenticated.');
+// 		return $response
+// 		->withStatus(401)
+// 		->withHeader('Content-Type', 'text/html;charset=utf-8')
+// 		->write('You are not authenticated.');
+		//redirect:
+		$route = App::object()->getContainer()->get('router')->getNamedRoute('login');
+		$route->setArgument("message" , "You are not authenticated" );
+		$route->run($request, $response );
 	})->setName("notAuthenticated");
 	
 	Route::get('/notAuthorized', function (SlimHttpRequest $request, SlimHttpResponse $response, $args) {
@@ -24,27 +29,37 @@ Route::group('/auth', function() {
 	})->setName("notAuthorized");
 });
 
-Route::map(['GET','POST'], '/login', function () {
+Route::map(['GET','POST'], '/login', function (SlimHttpRequest $request, SlimHttpResponse $response, $args) {
     $username = null;
-    $app = App::$app;
-    if ($app->request()->isPost()) {
-        $username = $app->request->post('username');
-        $password = $app->request->post('password');
-        $result = $app->authenticator->authenticate($username, $password);
+    $app = App::object();
+    /*
+     * require: slim/flash
+     * don't know if slim/flash is not stable or I'm a fool
+     */
+//     $app->getContainer()["flash"]->addMessage('error', 'testando novo');
+//     var_dump( $app->getContainer()["flash"]->storage["slimFlash"]["error"] );
+//     var_dump( $app->getContainer()["flash"]->getMessages()["error"] );
+	$message = array_key_exists("message", $args) ? $args["message"] : null;
+    if ($request->isPost()) {
+        $username = $request->getParsedBody()['slimUsername'];
+        $password = $request->getParsedBody()['slimPassword']; //(new PasswordValidator())->rehash($request->getParsedBody()['slimPassword']);
+        $result = $app->getContainer()["authenticator"]->authenticate($username, $password);
         if ($result->isValid()) {
-            $app->redirect('/');
+            //redirect:
+   			return $app->getContainer()->view->render($response, 'home.html');
         } else {
-            $messages = $result->getMessages();
-            $app->flashNow('error', $messages[0]);
+            $message = $result->getMessages()[0];
+//             $app->getContainer()["flash"]->addMessage('error', $messages[0]);
         }
     }
-    $app->render('login.twig', array('username' => $username));
+    return $app->getContainer()->view->render($response, 'login.html', array('username' => @$username, "message" => $message));
 })->setName('login');
 
-Route::get('/logout', function () {
-	$app = App::$app;
-    if ($app->auth->hasIdentity()) {
-        $app->auth->clearIdentity();
+Route::get('/logout', function (SlimHttpRequest $request, SlimHttpResponse $response, $args) {
+	$app = App::object();
+    if ($app->getContainer()["auth"]->hasIdentity()) {
+        $app->getContainer()["auth"]->clearIdentity();
     }
-    $app->redirect('/');
+    //redirect:
+    $app->getContainer()->get('router')->getNamedRoute('home')->run($request, $response);
 });

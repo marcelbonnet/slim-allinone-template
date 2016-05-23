@@ -67,15 +67,22 @@ $storage = new SessionStorage('slim_auth', null, $sessionManager);
 $container["authAdapter"] = $adapter;
 $container["authStorage"] = $storage;
 
-#remove it from here, belongs to login route:
-$authenticator = $container["authenticator"];
-$authTeste = $authenticator->authenticate("foobar","teste");
+// remove it from here, belongs to login route:
+// $authenticator = $container["authenticator"];
+// $authTeste = $authenticator->authenticate("foobar","teste");
 // var_dump($authTeste);
 // var_dump( (new PasswordValidator())->rehash('teste') );
 
 $app->add(new Authorization( $container["auth"], $acl, new RedirectHandler("auth/notAuthenticated", "auth/notAuthorized") ));
 
-
+/*
+ * Slim Flash
+ * requires slim/flash
+ */
+// Register provider
+// $container['flash'] = function () {
+// 	return new \Slim\Flash\Messages();
+// };
 
 /* ****************************************************************************
  * Twig View helper

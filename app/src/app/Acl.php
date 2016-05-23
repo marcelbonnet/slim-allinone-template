@@ -26,7 +26,9 @@ class Acl extends ZendAcl
 		$this->addResource('/logout');
 		$this->addResource('/member');
 		$this->addResource('/admin');
-		$this->addResource('/hello');
+		
+		$this->addResource('/home');
+		$this->addResource('/hello[/{name}]');
 		
 		$this->addResource('/protected');
 		$this->addResource('/auth/notAuthenticated');
@@ -39,6 +41,8 @@ class Acl extends ZendAcl
 		$this->allow('guest', '/logout', $this->defaultPrivilege);
 		$this->allow('member', '/member', $this->defaultPrivilege);
 		
+		$this->allow('guest', '/home' , $this->defaultPrivilege);
+		$this->allow('guest', '/hello[/{name}]' , $this->defaultPrivilege);
 		$this->allow('guest', '/auth/notAuthenticated' , $this->defaultPrivilege);
 		$this->allow('guest', '/auth/notAuthorized' , $this->defaultPrivilege);
 		$this->allow('admin', '/protected' , $this->defaultPrivilege);
