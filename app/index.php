@@ -20,11 +20,13 @@ use JeremyKendall\Slim\Auth\ServiceProvider\SlimAuthProvider;
 use Zend\Authentication\Storage\Session as SessionStorage;
 use JeremyKendall\Slim\Auth\Middleware\Authorization;
 use JeremyKendall\Slim\Auth\Handlers\RedirectHandler;
+use RKA\Session;
 
 require_once 'vendor/autoload.php';
 
-session_cache_limiter(false);
-session_start();
+// REMOVE: using rka-slim-session-*
+// session_cache_limiter(false);
+// session_start();
 
 /* ****************************************************************************
  * Slim App and Config
@@ -38,9 +40,17 @@ $container = $app->getContainer();
 
 
 /* ****************************************************************************
- * ACL
+ * Session
  * ****************************************************************************
  */
+// $app->add(new RKA\SessionMiddleware(['name' => 'app.session']));
+
+/* ****************************************************************************
+ * Auth RDBMS
+ * ****************************************************************************
+ */
+$acl = new Acl();
+
 // Configure Slim Auth components
 $options = array(
 		\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -50,22 +60,29 @@ $validator = new PasswordValidator();
 $adapter = new PdoAdapter( (new \PDO("mysql:host=localhost;port=3306;dbname=slim_allinone_orm", "marcelbonnet", "" ))
 		, 'users', 'username', 'password', $validator);
 
-$acl = new Acl();
+$container["authAdapter"] = $adapter;
+
+// $sessionConfig = new SessionConfig();
+// $sessionConfig->setOptions(array(
+// 		'remember_me_seconds' => 60 * 60 * 24 * 7,
+// 		'name' => 'slim-auth-impl',
+// ));
+// $sessionManager = new SessionManager($sessionConfig);
+// $sessionManager->rememberMe();
+// $storage = new SessionStorage('slim_auth', null, $sessionManager);
+
+// $container["authStorage"] = $storage;
+	
 
 $slimAuthProvider = new SlimAuthProvider();
 $slimAuthProvider->register($container);
 
-$sessionConfig = new SessionConfig();
-$sessionConfig->setOptions(array(
-		'remember_me_seconds' => 60 * 60 * 24 * 7,
-		'name' => 'slim-auth-impl',
-));
-$sessionManager = new SessionManager($sessionConfig);
-$sessionManager->rememberMe();
-$storage = new SessionStorage('slim_auth', null, $sessionManager);
-
-$container["authAdapter"] = $adapter;
-$container["authStorage"] = $storage;
+/* ****************************************************************************
+ * Auth LDAP
+ * http://framework.zend.com/manual/current/en/modules/zend.authentication.adapter.ldap.html
+ * ****************************************************************************
+ */
+//TODO Zend LDAP template.
 
 // remove it from here, belongs to login route:
 // $authenticator = $container["authenticator"];
@@ -74,7 +91,14 @@ $container["authStorage"] = $storage;
 // var_dump( (new PasswordValidator())->rehash('teste') );
 
 $app->add(new Authorization( $container["auth"], $acl, new RedirectHandler("auth/notAuthenticated", "auth/notAuthorized") ));
-
+// var_dump("ID " . $container["auth"]->hasIdentity());
+// var_dump("authStorage " . $container["authStorage"]->read());
+$s = new Session();
+//  var_dump($s);
+// $s->teste = 'OK';
+// var_dump($s->slim_auth);
+//  var_dump(session_status());
+// var_dump($container["auth"]->getStorage()->read()["username"]);
 /*
  * Slim Flash
  * requires slim/flash
@@ -108,6 +132,7 @@ $container['view'] = function ($c) {
     $view->getEnvironment()->addGlobal('twigTime', 			DarthEv\Core\Config::get()["misc"]["twigTime"]);
     $view->getEnvironment()->addGlobal('twigDateTime', 		DarthEv\Core\Config::get()["misc"]["twigDateTime"]);
     $view->getEnvironment()->addGlobal('twigFullDateTime', 	DarthEv\Core\Config::get()["misc"]["twigFullDateTime"]);
+    $view->getEnvironment()->addGlobal('username', 			$c["auth"]->getStorage()->read()["username"]);
     return $view;
 };
 /* ****************************************************************************

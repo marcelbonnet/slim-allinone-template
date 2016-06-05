@@ -8,17 +8,47 @@ It uses Twig as template.
 
 It has some core files to code a clean MVC application.
 
-**NOTE: it is functional, but it needs some refactoring, like namespaces.**
+**NOTE: it is functional, but it needs some refactoring, like rename namespaces, clean up code, put some things in proper/better place/design ...**
 
 
 ## Notes About Authentication/Authorization Extension
 
-Added jeremykendall/slim-auth to support Zend Authentication and Acls. 
+Added jeremykendall/slim-auth to support Zend Authentication and Acls.
 
-Commit 6c7cb6c85002a87e31f0a3c46152896a76901f6e is a working (hardcoded) example/reference for Slim 3.
+The template is configured for RDBMS authentication and authorization.
 
-See required MySQL instructions in the same git log revision.
+See required MySQL instructions above:
 
+```mysql
+    CREATE TABLE `users` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `username` varchar(50) NOT NULL,
+      `role` varchar(50) NOT NULL,
+      `password` varchar(255) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+```
+
+Add a test username and password:
+
+```mysql    
+    INSERT INTO users (username, role, password) VALUES (
+       'foobar',
+       'admin',
+       'teste' -- password is generated from PHP: var_dump( (new PasswordValidator())->rehash('teste') );
+    );
+    
+    mysql> SELECT * FROM users;
+    +----+----------+-------+--------------------------------------------------------------+
+    | id | username | role  | password                                                     |
+    +----+----------+-------+--------------------------------------------------------------+
+    |  1 | foobar   | admin | $2y$10$jmYbCe3qtktfBvhpkZyzle0.PPR.RnMOn0UF80E7nRIfbhgrfbtbS |
+    +----+----------+-------+--------------------------------------------------------------+
+```
+
+## Session
+
+I'm configuring Session with `akrabat/rka-slim-session-middleware`, but I dealing with some problems by now.
 
 # Installing
 

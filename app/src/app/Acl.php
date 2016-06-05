@@ -3,6 +3,7 @@ namespace DarthEv\Core\app;
 
 use Zend\Permissions\Acl\Acl as ZendAcl;
 use Zend\Permissions\Acl\Resource\GenericResource;
+use DarthEv;
 
 /**
  * ACL for Slim Auth Implementation Example.
@@ -50,4 +51,5 @@ class Acl extends ZendAcl
 		// This allows admin access to everything
 		$this->allow('admin');
 	}
+	
 }

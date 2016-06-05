@@ -7,6 +7,7 @@ use \Slim\Http\Response as SlimHttpResponse;
 use DarthEv\Core\app\Route;
 use DarthEv\Core\app\App;
 use JeremyKendall\Password\PasswordValidator;
+use DarthEv\Core\Session;
 
 
 Route::group('/auth', function() {
@@ -46,6 +47,14 @@ Route::map(['GET','POST'], '/login', function (SlimHttpRequest $request, SlimHtt
         $result = $app->getContainer()["authenticator"]->authenticate($username, $password);
         if ($result->isValid()) {
             //redirect:
+//             Session::setUsername($username);
+// 			var_dump($app->getContainer()["authStorage"]->read());
+//         	$app->getContainer()["authStorage"]->write($username);
+//         	var_dump("DEPOIS " .$app->getContainer()["authStorage"]->read());
+//             var_dump("LOGIN " .$app->getContainer()["authenticator"]->hasIdentity());
+//             die();
+// 			var_dump("<p>LOGIN SESSION:</p>");
+//         	var_dump($_SESSION['slim_auth']);
    			return $app->getContainer()->view->render($response, 'home.html');
         } else {
             $message = $result->getMessages()[0];
