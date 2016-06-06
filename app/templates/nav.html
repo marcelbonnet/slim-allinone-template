@@ -11,12 +11,15 @@
     {% set usericon_class="hide" %}
     {% set span_user_class="glyphicon glyphicon-user" %}
 {% endif %}
-<NAV>
-	<!-- Fixed navbar
+
+<!-- 
+Fixed navbar
     cores: navbar-[default|inverse]
     navbar-fixed-top|navbar-static-top|[vazio]|
-     -->
-	<div class="navbar navbar-default col-xs-12 col-md-12"
+ -->
+<NAV>
+	
+	<div class="navbar navbar-default navbar-fixed-top col-xs-12 col-md-12"
 		role="navigation">
 		<div class="container col-xs-12 col-md-12">
 			<div class="navbar-header">
@@ -86,16 +89,16 @@
                         </li>
                 {% endif %}
 				</ul>
-				<ul class="nav navbar-nav navbar-right col-lg-3">
-					<div class="input-group">
-					   <span class="glyphicon glyphicon-search input-group-addon"></span>
-						<input type="text" name="searchTerm" class="form-control"
-							placeholder="Procurar por..."> <span
-							class="input-group-btn">
-						</span>
-					</div>
-					<!-- /input-group -->
-				</ul>
+				
+				<form class="navbar-form navbar-right" role="search">
+			        <div class="input-group">
+			             <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+					        <div class="input-group-btn">
+					           <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+					        </div>
+			        </div>
+		      </form>
+		      
 			</div>
 			<!--/.nav-collapse -->
 		</div>
