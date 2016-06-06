@@ -37,13 +37,11 @@ $app = new \Slim\App($config);
 
 // Fetch DI Container
 $container = $app->getContainer();
-
-
 /* ****************************************************************************
  * Session
  * ****************************************************************************
  */
-// $app->add(new RKA\SessionMiddleware(['name' => 'app.session']));
+$app->add(new RKA\SessionMiddleware(['name' => 'app.session']));
 
 /* ****************************************************************************
  * Auth RDBMS
@@ -91,13 +89,13 @@ $slimAuthProvider->register($container);
 // var_dump( (new PasswordValidator())->rehash('teste') );
 
 $app->add(new Authorization( $container["auth"], $acl, new RedirectHandler("auth/notAuthenticated", "auth/notAuthorized") ));
+
 // var_dump("ID " . $container["auth"]->hasIdentity());
 // var_dump("authStorage " . $container["authStorage"]->read());
-$s = new Session();
+// $s = new Session();
 //  var_dump($s);
 // $s->teste = 'OK';
 // var_dump($s->slim_auth);
-//  var_dump(session_status());
 // var_dump($container["auth"]->getStorage()->read()["username"]);
 /*
  * Slim Flash

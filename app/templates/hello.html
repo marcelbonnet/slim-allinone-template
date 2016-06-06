@@ -4,6 +4,9 @@
 <div class="col-md-12">
 	<h1>Hello, {{username}}</h1>
 	<p>Test page.</p>
+	{% if msg is not empty %}
+	<p>Testing session: {{msg}}</p>
+	{% endif %}
 </div>
 
 {% endblock %}

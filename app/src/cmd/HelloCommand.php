@@ -12,7 +12,8 @@ class HelloCommand extends AbstractCommand {
 	}
 	
 	public function process() {
-		$this->data = array("username" => @$this->args['name'] );
+		$session = new \RKA\Session();
+		$this->data = array("username" => @$this->args['name'], "msg" => $session->msg );
 	}
 	
 	public function respondWithJson() {

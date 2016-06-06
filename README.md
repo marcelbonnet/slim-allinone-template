@@ -11,7 +11,7 @@ It has some core files to code a clean MVC application.
 **NOTE: it is functional, but it needs some refactoring, like rename namespaces, clean up code, put some things in proper/better place/design ...**
 
 
-## Notes About Authentication/Authorization Extension
+## Authentication/Authorization Extension
 
 Added jeremykendall/slim-auth to support Zend Authentication and Acls.
 
@@ -48,7 +48,23 @@ Add a test username and password:
 
 ## Session
 
-I'm configuring Session with `akrabat/rka-slim-session-middleware`, but I dealing with some problems by now.
+Configured with `akrabat/rka-slim-session-middleware` .
+
+```php
+$app->get('/', function ($request, $response) {
+    $session = new \RKA\Session();
+
+    // Get session variable:
+    $foo = $session->get('foo', 'some-default');
+    $bar = $session->bar;
+
+    // Set session variable:
+    $session->foo = 'this';
+    $session->set('bar', 'that');
+
+    return $response;
+});
+```
 
 # Installing
 

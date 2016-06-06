@@ -14,6 +14,8 @@ class HomeCommand extends AbstractCommand {
 	public function process() {
 		$request  = new MobileRequest( $this->request );
 		$isMobile = $request->isMobile();
+		$session = new \RKA\Session();
+		$session->msg = "session test"; //just for testing session
 		$this->data = array("isMobile" => $isMobile);
 	}
 	
