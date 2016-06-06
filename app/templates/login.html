@@ -2,8 +2,6 @@
 {% block content %}
 <style>
 body {
-  padding-top: 40px;
-  padding-bottom: 40px;
   background-color: #eee;
 }
 
@@ -49,7 +47,7 @@ body {
     {% set div_error_class='' %}
 {% endif %}
 
-<div class="container">
+<div class="col-md-12">
   <form class="form-signin" method="POST" action="{{path_for('login')}}">
     <h2 class="form-signin-heading">{% include "app_name" %} Login</h2>
     <label for="slimUsername" class="sr-only">Username</label>
