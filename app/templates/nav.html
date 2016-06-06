@@ -67,14 +67,24 @@
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right dropdown">
+				{% if username is not empty %}
 					<li class="dropdown-toggle"
-                        data-toggle="dropdown"><a href="#" class="label label-primary">{{username}} </a><span class="caret"></span></li>
+                        data-toggle="dropdown">
+                        <a href="#" class="">
+                            <span class="badge">{{username}}</span>
+                            <span class="caret"></span>
+                        </a>
+                    </li>
                     <ul class="dropdown-menu" role="menu">
-	                    <li class="{{photos_active}}"><a
-	                        href="{{path_for('hello')}}/paul">Hello, Paul</a></li>
-	                    <li class="{{photos_active}}"><a
-	                        href="{{path_for('hello')}}/john">Hello, John</a></li>
+	                    <li class="">
+	                       <a href="{{path_for('logout')}}">Logout</a>
+	                    </li>
                     </ul>
+                {% else %}
+                        <li class="nav navbar-nav">
+                           <a href="{{path_for('login')}}" class=""><span class="glyphicon glyphicon-user"> </span> Login</a>
+                        </li>
+                {% endif %}
 				</ul>
 				<ul class="nav navbar-nav navbar-right col-lg-3">
 					<div class="input-group">

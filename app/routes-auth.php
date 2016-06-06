@@ -71,4 +71,4 @@ Route::get('/logout', function (SlimHttpRequest $request, SlimHttpResponse $resp
     }
     //redirect:
     $app->getContainer()->get('router')->getNamedRoute('home')->run($request, $response);
-});
+})->setName('logout');
