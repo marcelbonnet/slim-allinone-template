@@ -21,6 +21,9 @@ use Zend\Authentication\Storage\Session as SessionStorage;
 use JeremyKendall\Slim\Auth\Middleware\Authorization;
 use JeremyKendall\Slim\Auth\Handlers\RedirectHandler;
 use RKA\Session;
+use DarthEv\Core\Config;
+use Zend\Authentication\AuthenticationService;
+use DarthEv\Core\app\SlimLdapAdapter;
 
 require_once 'vendor/autoload.php';
 
@@ -44,19 +47,25 @@ $container = $app->getContainer();
 $app->add(new RKA\SessionMiddleware(['name' => 'app.session']));
 
 /* ****************************************************************************
- * Auth RDBMS
+ * Authentication/Authorization
  * ****************************************************************************
  */
 $acl = new Acl();
+/*
+ * RDBMS Adapter
+ */
+// $validator = new PasswordValidator();
+// $adapter = new PdoAdapter( (new \PDO("mysql:host=localhost;port=3306;dbname=slim_allinone_orm", "marcelbonnet", "" ))
+// 		, 'users', 'username', 'password', $validator);
 
-// Configure Slim Auth components
-$options = array(
-		\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-		\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-);
-$validator = new PasswordValidator();
-$adapter = new PdoAdapter( (new \PDO("mysql:host=localhost;port=3306;dbname=slim_allinone_orm", "marcelbonnet", "" ))
-		, 'users', 'username', 'password', $validator);
+/*
+ * LDAP Adapter
+ */
+$configReader = new \Zend\Config\Reader\Ini();
+$configData = $configReader->fromFile(Config::CONFIG_FILE);
+$config = new \Zend\Config\Config($configData, false);
+$options = $config->ldapauth->ldap->toArray();
+$adapter = new Zend\Authentication\Adapter\Ldap($options);
 
 $container["authAdapter"] = $adapter;
 
@@ -130,7 +139,7 @@ $container['view'] = function ($c) {
     $view->getEnvironment()->addGlobal('twigTime', 			DarthEv\Core\Config::get()["misc"]["twigTime"]);
     $view->getEnvironment()->addGlobal('twigDateTime', 		DarthEv\Core\Config::get()["misc"]["twigDateTime"]);
     $view->getEnvironment()->addGlobal('twigFullDateTime', 	DarthEv\Core\Config::get()["misc"]["twigFullDateTime"]);
-    $view->getEnvironment()->addGlobal('username', 			$c["auth"]->getStorage()->read()["username"]);
+    $view->getEnvironment()->addGlobal('username', 			(is_array(@$c["auth"]->getStorage()->read()))? @$c["auth"]->getStorage()->read()["username"] : @$c["auth"]->getStorage()->read());
     return $view;
 };
 /* ****************************************************************************

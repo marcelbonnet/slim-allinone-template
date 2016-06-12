@@ -12,7 +12,9 @@
         "zguillez/slim-mobile-detect": "^1.0.0",
         "pavlakis/slim-cli" : "^1.0.0",
         "jeremykendall/slim-auth" : "^2.0.0-alpha",
-        "akrabat/rka-slim-session-middleware" : "^2.0.0-RC1"
+        "akrabat/rka-slim-session-middleware" : "^2.0.0-RC1",
+        "zendframework/zend-config" : "^2.6.0", 
+        "zendframework/zend-ldap" : "^2.7.1" 
     }
    ,"autoload": {
         "psr-4": {

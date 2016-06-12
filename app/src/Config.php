@@ -9,12 +9,12 @@ namespace DarthEv\Core;
 class Config
 {
 
-    public static $CONFIG_FILE= __DIR__ . '/../../conf/' . "config.ini";
+    const CONFIG_FILE= __DIR__ . '/../../conf/' . "config.ini";
 
     public static function get()
     {
-        $conf = parse_ini_file( self::$CONFIG_FILE , true );
-        if ($conf === false ) throw new \Exception("Error loading Application's configuration file: " . $CONFIG_FILE );
+        $conf = parse_ini_file( self::CONFIG_FILE , true );
+        if ($conf === false ) throw new \Exception("Error loading Application's configuration file: " . self::CONFIG_FILE );
         return $conf;
     }
 

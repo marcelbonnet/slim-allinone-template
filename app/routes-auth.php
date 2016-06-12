@@ -45,6 +45,7 @@ Route::map(['GET','POST'], '/login', function (SlimHttpRequest $request, SlimHtt
         $username = $request->getParsedBody()['slimUsername'];
         $password = $request->getParsedBody()['slimPassword']; //(new PasswordValidator())->rehash($request->getParsedBody()['slimPassword']);
         $result = $app->getContainer()["authenticator"]->authenticate($username, $password);
+        var_dump($result->getMessages());
         if ($result->isValid()) {
             //redirect:
 //             Session::setUsername($username);
@@ -57,8 +58,16 @@ Route::map(['GET','POST'], '/login', function (SlimHttpRequest $request, SlimHtt
 //         	var_dump($_SESSION['slim_auth']);
    			return $app->getContainer()->view->render($response, 'home.html');
         } else {
-            $message = $result->getMessages()[0];
+        	$messages = $result->getMessages();
+            $message = $messages[0]; //message to presentation layer
 //             $app->getContainer()["flash"]->addMessage('error', $messages[0]);
+			$logger = $app->getContainer()["logger"];
+        	foreach ($messages as $i => $msg) {
+					$messages[$i] = str_replace("\n", "\n  ", $msg);
+			}
+			
+			$logger->addWarning("Authentication failure for $username .", $messages);
+            
         }
     }
     return $app->getContainer()->view->render($response, 'login.html', array('username' => @$username, "message" => $message));

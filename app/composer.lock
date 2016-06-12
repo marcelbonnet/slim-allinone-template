@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c4793ab1e76680fd571cca173426b8f6",
-    "content-hash": "af2433793a7ec4e18afc339cd68f6ae9",
+    "hash": "439b8992ac5e8c75681a7594e26dd0a2",
+    "content-hash": "2c66ca3d8c28f966f1804f92a9a80b85",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -1434,16 +1434,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.8.6",
+            "version": "v2.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "48221d3de4dc22d2cd57c97e8b9361821da86609"
+                "reference": "5ac8bc9aa77bb2edf06af3a1bb6bc1020d23acd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/48221d3de4dc22d2cd57c97e8b9361821da86609",
-                "reference": "48221d3de4dc22d2cd57c97e8b9361821da86609",
+                "url": "https://api.github.com/repos/symfony/console/zipball/5ac8bc9aa77bb2edf06af3a1bb6bc1020d23acd3",
+                "reference": "5ac8bc9aa77bb2edf06af3a1bb6bc1020d23acd3",
                 "shasum": ""
             },
             "require": {
@@ -1490,7 +1490,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-26 12:00:47"
+            "time": "2016-06-06 15:06:25"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1601,16 +1601,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.0",
+            "version": "v1.24.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8"
+                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
-                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
+                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
                 "shasum": ""
             },
             "require": {
@@ -1658,7 +1658,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-25 21:22:18"
+            "time": "2016-05-30 09:11:59"
         },
         {
             "name": "wp-cli/php-cli-tools",
@@ -1773,6 +1773,62 @@
             "time": "2016-02-28 15:02:34"
         },
         {
+            "name": "zendframework/zend-config",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-config.git",
+                "reference": "2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-config/zipball/2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d",
+                "reference": "2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "1.7.*",
+                "phpunit/phpunit": "~4.0",
+                "zendframework/zend-filter": "^2.6",
+                "zendframework/zend-i18n": "^2.5",
+                "zendframework/zend-json": "^2.6.1",
+                "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
+            },
+            "suggest": {
+                "zendframework/zend-filter": "Zend\\Filter component",
+                "zendframework/zend-i18n": "Zend\\I18n component",
+                "zendframework/zend-json": "Zend\\Json to use the Json reader or writer classes",
+                "zendframework/zend-servicemanager": "Zend\\ServiceManager for use with the Config Factory to retrieve reader and writer instances"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev",
+                    "dev-develop": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Config\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides a nested object property based user interface for accessing this configuration data within application code",
+            "homepage": "https://github.com/zendframework/zend-config",
+            "keywords": [
+                "config",
+                "zf2"
+            ],
+            "time": "2016-02-04 23:01:10"
+        },
+        {
             "name": "zendframework/zend-eventmanager",
             "version": "3.0.1",
             "source": {
@@ -1825,6 +1881,59 @@
                 "zf2"
             ],
             "time": "2016-02-18 20:53:00"
+        },
+        {
+            "name": "zendframework/zend-ldap",
+            "version": "2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-ldap.git",
+                "reference": "14c5b862899ad8bb6cd02c567f394ec5dadc039d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-ldap/zipball/14c5b862899ad8bb6cd02c567f394ec5dadc039d",
+                "reference": "14c5b862899ad8bb6cd02c567f394ec5dadc039d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ldap": "*",
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "1.7.*",
+                "php-mock/php-mock-phpunit": "~0.3",
+                "phpunit/phpunit": "^4.5",
+                "zendframework/zend-config": "^2.5",
+                "zendframework/zend-eventmanager": "^2.6.3 || ^3.0.1",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+            },
+            "suggest": {
+                "zendframework/zend-eventmanager": "Zend\\EventManager component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev",
+                    "dev-develop": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Ldap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides support for LDAP operations including but not limited to binding, searching and modifying entries in an LDAP directory",
+            "homepage": "https://github.com/zendframework/zend-ldap",
+            "keywords": [
+                "ldap",
+                "zf2"
+            ],
+            "time": "2016-05-23 19:03:38"
         },
         {
             "name": "zendframework/zend-permissions-acl",
