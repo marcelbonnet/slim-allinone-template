@@ -12,6 +12,37 @@ class Acl extends ZendAcl
 {
 	protected $defaultPrivilege = array('GET');
 	
+	/**
+	 * http://stackoverflow.com/questions/14540445/zend-acl-how-to-check-a-user-with-multiple-roles-for-resource-access
+	 * {@inheritDoc}
+	 * @see \Zend\Permissions\Acl\Acl::isAllowed()
+	 */
+	public function isAllowed($roleOrUser = null, $resource = null, $privilege = null)
+	{
+		//teste:
+		if(is_array($roleOrUser)){
+			foreach ($roleOrUser as $role) {
+				if (parent::isAllowed($role, $resource, $privilege)) {
+					return true;
+				}
+			}
+		}
+		return parent::isAllowed($roleOrUser, $resource, $privilege);
+		//verificar se é instância de um objeto: UserDAO ?
+// 		if ($roleOrUser instanceof Users_Model_User) {
+// 			// check each of that user's roles
+// 			foreach ($roleOrUser->roles as $role) {
+// 				if (parent::isAllowed($role, $resource, $privilege)) {
+// 					return true;
+// 				}
+// 			}
+	
+// 			return false;
+// 		} else {
+// 			return parent::isAllowed($roleOrUser, $resource, $privilege);
+// 		}
+	}
+	
 	public function __construct()
 	{
 		// APPLICATION ROLES
@@ -46,6 +77,7 @@ class Acl extends ZendAcl
 		$this->allow('guest', '/hello[/{name}]' , $this->defaultPrivilege);
 		$this->allow('guest', '/auth/notAuthenticated' , $this->defaultPrivilege);
 		$this->allow('guest', '/auth/notAuthorized' , $this->defaultPrivilege);
+// 		$this->allow('member', '/protected' , $this->defaultPrivilege);
 		$this->allow('admin', '/protected' , $this->defaultPrivilege);
 		
 		// This allows admin access to everything

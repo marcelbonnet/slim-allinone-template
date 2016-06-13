@@ -61,11 +61,22 @@ $acl = new Acl();
 /*
  * LDAP Adapter
  */
-$configReader = new \Zend\Config\Reader\Ini();
-$configData = $configReader->fromFile(Config::CONFIG_FILE);
-$config = new \Zend\Config\Config($configData, false);
-$options = $config->ldapauth->ldap->toArray();
-$adapter = new Zend\Authentication\Adapter\Ldap($options);
+// $configReader = new \Zend\Config\Reader\Ini();
+// $configData = $configReader->fromFile(Config::CONFIG_FILE);
+// $config = new \Zend\Config\Config($configData, false);
+// $options = $config->ldapauth->ldap->toArray();
+// $adapter = new Zend\Authentication\Adapter\Ldap($options);
+/*
+ * precisa ser um pacote:
+ * 1- rdbms
+ * 2- ldap somente (usa grupos de lá)
+ * 3- ldap na auth, rdbms na authorz
+ */
+
+/*
+ * Teste de Adapter LDAP/Doctrine
+ */
+$adapter = new DarthEv\Core\app\TesteAdapter(null);
 
 $container["authAdapter"] = $adapter;
 
@@ -105,7 +116,7 @@ $app->add(new Authorization( $container["auth"], $acl, new RedirectHandler("auth
 //  var_dump($s);
 // $s->teste = 'OK';
 // var_dump($s->slim_auth);
-// var_dump($container["auth"]->getStorage()->read()["username"]);
+var_dump($container["auth"]->getStorage()->read());
 /*
  * Slim Flash
  * requires slim/flash
