@@ -5,6 +5,7 @@ use PDO;
 use Zend\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 
 /**
  * Authenticate through LDAP
@@ -14,16 +15,38 @@ use Doctrine\ORM\EntityManager;
  */
 class TesteAdapter extends AbstractAdapter
 {
+    protected static $configFile = null;
     
+    protected $entityManager;
+    protected $roleEntity;
+    protected $roleAttribute;
+    protected $roleAssociationAttribute;
+    protected $identityAttribute;
+    protected $userEntity;
 
+    /**
+     * 
+     * @param string $configIniFile ini file with LDAP settings
+     * @param EntityManager $entityManager
+     * @param string $roleFQCN Role Entity fully qualified class name
+     * @param string $identityAttribute of $roleFQCN
+     */
     public function __construct(
-        /*EntityManager*/ $entityManager
+    	$configIniFile,
+        EntityManager $entityManager,
+    	$roleFQCN = null,
+    	$roleAttribute = null,
+//     	$roleAssociationAttribute,
+    	$userEntity,
+    	$identityAttribute = NULL
     ) {
-//         $this->db = $db;
-//         $this->tableName = $tableName;
-//         $this->identityColumn = $identityColumn;
-//         $this->credentialColumn = $credentialColumn;
-//         $this->passwordValidator = $passwordValidator;
+    	self::$configFile		= $configIniFile;
+    	$this->entityManager 	= $entityManager;
+    	$this->roleEntity		= $roleFQCN;
+    	$this->roleAttribute	= $roleAttribute;
+//     	$this->roleAssociationAttribute = $roleAssociationAttribute;
+    	$this->userEntity		= $userEntity;
+    	$this->identityAttribute= $identityAttribute;
     }
 
     /**
@@ -33,11 +56,27 @@ class TesteAdapter extends AbstractAdapter
      */
     public function authenticate()
     {
+    	$result = $this->authenticateLdap();
+    	var_dump($result);
+    	if (!$result->isValid()){
+    		/*
+    		 * TODO: log failure to file
+    		 */
+    		
+    		return new AuthenticationResult(AuthenticationResult::FAILURE
+    				, $result->getIdentity()
+    				, $result->getMessages());
+    	}
+    	
+    	$userRoles = $this->findUserRoles();
+    	
+    	\Doctrine\Common\Util\Debug::dump($userRoles);
+    	
     	$user = array(
-    			"id" 		=> 12345678,
-    			"username" 	=> "test@example.com",
-    			"role"		=> array("member","admin"),
-    			"password" 	=> null
+//     			"id" 		=> 12345678,
+    			"username" 	=> $this->getIdentity(),
+//     			"role"		=> array("member","admin"),
+    			"role"		=> $userRoles
     	);
     	return new AuthenticationResult(AuthenticationResult::SUCCESS, $user, array());
     	/*
@@ -69,25 +108,64 @@ class TesteAdapter extends AbstractAdapter
         );
         */
     }
+    
+    /**
+     * Expects ini file's schema:
+     * <pre>
+     * [ldapauth]
+     * ldap.[options]...
+     * ldap.[options]...
+     * ldap.[options]...
+     * ...
+     * </pre>
+     */
+    private function authenticateLdap()
+    {
+    	$configReader = new \Zend\Config\Reader\Ini();
+    	$configData = $configReader->fromFile(self::$configFile);
+    	$config = new \Zend\Config\Config($configData, false);
+    	$options = $config->ldapauth->ldap->toArray();
+    	$adapter = new \Zend\Authentication\Adapter\Ldap($options);
+    	return $adapter->authenticate();
+    }
+    
 
     /**
-     * Finds user to authenticate.
+     * Finds the authenticated LDAP's user from RDBMS and return
+     * its roles.
      *
-     * @return array|null Array of user data, null if no user found
      */
-    private function findUser()
+    private function findUserRoles()
     {
-        $sql = sprintf(
-            'SELECT * FROM %s WHERE %s = :identity',
-            $this->getTableName(),
-            $this->getIdentityColumn()
-        );
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(array('identity' => $this->getIdentity()));
+    	$dql = sprintf("SELECT r.%s 
+    			FROM %s r
+    			JOIN %s u
+    			WHERE u.%s = :username",
+    			$this->roleAttribute,
+    			$this->roleEntity,
+    			$this->userEntity,
+    			$this->identityAttribute
+    			);
+    	
+    	try {
+    		$query = $this->entityManager->createQuery($dql);
+    		$query->setParameter("username", $this->getIdentity());
+    		return $query->getResult(Query::HYDRATE_ARRAY);
+    		//return $rolesDAO = ... mode = FETCH_ARRAY
+    	} catch (Exception $e) {
+    		throw $e;
+    	}
+//         $sql = sprintf(
+//             'SELECT * FROM %s WHERE %s = :identity',
+//             $this->getTableName(),
+//             $this->getIdentityColumn()
+//         );
+//         $stmt = $this->db->prepare($sql);
+//         $stmt->execute(array('identity' => $this->getIdentity()));
 
-        // Explicitly setting fetch mode fixes
-        // https://github.com/jeremykendall/slim-auth/issues/13
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+//         // Explicitly setting fetch mode fixes
+//         // https://github.com/jeremykendall/slim-auth/issues/13
+//         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**

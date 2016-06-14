@@ -24,6 +24,7 @@ use RKA\Session;
 use DarthEv\Core\Config;
 use Zend\Authentication\AuthenticationService;
 use DarthEv\Core\app\SlimLdapAdapter;
+use DarthEv\Core\dao\DAO;
 
 require_once 'vendor/autoload.php';
 
@@ -76,7 +77,15 @@ $acl = new Acl();
 /*
  * Teste de Adapter LDAP/Doctrine
  */
-$adapter = new DarthEv\Core\app\TesteAdapter(null);
+$adapter = new DarthEv\Core\app\TesteAdapter(
+		Config::CONFIG_FILE,
+		DAO::em(),
+		"DarthEv\Core\dao\UserRole",
+		"role",
+// 		"user",
+		"DarthEv\Core\dao\User",
+		"username"
+		);
 
 $container["authAdapter"] = $adapter;
 
