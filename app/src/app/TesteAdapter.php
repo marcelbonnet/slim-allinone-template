@@ -126,6 +126,8 @@ class TesteAdapter extends AbstractAdapter
     	$config = new \Zend\Config\Config($configData, false);
     	$options = $config->ldapauth->ldap->toArray();
     	$adapter = new \Zend\Authentication\Adapter\Ldap($options);
+    	$adapter->setIdentity($this->getIdentity());
+    	$adapter->setCredential($this->getCredential());
     	return $adapter->authenticate();
     }
     

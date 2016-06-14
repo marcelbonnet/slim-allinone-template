@@ -67,12 +67,6 @@ $acl = new Acl();
 // $config = new \Zend\Config\Config($configData, false);
 // $options = $config->ldapauth->ldap->toArray();
 // $adapter = new Zend\Authentication\Adapter\Ldap($options);
-/*
- * precisa ser um pacote:
- * 1- rdbms
- * 2- ldap somente (usa grupos de lá)
- * 3- ldap na auth, rdbms na authorz
- */
 
 /*
  * Teste de Adapter LDAP/Doctrine
@@ -89,6 +83,7 @@ $adapter = new DarthEv\Core\app\TesteAdapter(
 
 $container["authAdapter"] = $adapter;
 
+// FIXME Check later how to properly config session parameters
 // $sessionConfig = new SessionConfig();
 // $sessionConfig->setOptions(array(
 // 		'remember_me_seconds' => 60 * 60 * 24 * 7,
@@ -259,5 +254,11 @@ require_once "routes-auth.php";
 require_once "routes-cli.php";
 require_once "routes-api.php";
 require_once "routes-middleware.php";
+
+/*
+ * if needed while developing auth
+ */
+// $app->getContainer()["auth"]->hasIdentity();
+// $app->getContainer()["auth"]->clearIdentity();
 
 $app->run();
