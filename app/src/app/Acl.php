@@ -19,10 +19,9 @@ class Acl extends ZendAcl
 	 */
 	public function isAllowed($roleOrUser = null, $resource = null, $privilege = null)
 	{
-		//teste:
 		if(is_array($roleOrUser)){
 			foreach ($roleOrUser as $role) {
-				if (parent::isAllowed($role, $resource, $privilege)) {
+				if (parent::isAllowed($role['role'], $resource, $privilege)) {
 					return true;
 				}
 			}

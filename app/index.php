@@ -120,7 +120,7 @@ $app->add(new Authorization( $container["auth"], $acl, new RedirectHandler("auth
 //  var_dump($s);
 // $s->teste = 'OK';
 // var_dump($s->slim_auth);
-var_dump($container["auth"]->getStorage()->read());
+//  var_dump($container["auth"]->getStorage()->read()['role']);
 /*
  * Slim Flash
  * requires slim/flash
@@ -155,6 +155,7 @@ $container['view'] = function ($c) {
     $view->getEnvironment()->addGlobal('twigDateTime', 		DarthEv\Core\Config::get()["misc"]["twigDateTime"]);
     $view->getEnvironment()->addGlobal('twigFullDateTime', 	DarthEv\Core\Config::get()["misc"]["twigFullDateTime"]);
     $view->getEnvironment()->addGlobal('username', 			(is_array(@$c["auth"]->getStorage()->read()))? @$c["auth"]->getStorage()->read()["username"] : @$c["auth"]->getStorage()->read());
+    $view->getEnvironment()->addGlobal('userRoles', 		(is_array(@$c["auth"]->getStorage()->read()))? @$c["auth"]->getStorage()->read()["role"] : array());
     return $view;
 };
 /* ****************************************************************************

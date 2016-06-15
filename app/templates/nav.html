@@ -82,6 +82,17 @@ Fixed navbar
 	                    <li class="">
 	                       <a href="{{path_for('logout')}}">Logout</a>
 	                    </li>
+	                    {% if userRoles is not empty %}
+	                    <li class="divider"></li>
+	                    <li class="nav navbar-nav">
+                           <a href="#">Groups</a>
+                        </li>
+	                    {% endif %}
+	                    {% for r in userRoles%}
+                        <li class="nav navbar-nav">
+                           <a href="#">{{r['role']}}</a>
+                        </li>
+                {% endfor %}
                     </ul>
                 {% else %}
                         <li class="nav navbar-nav">

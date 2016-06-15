@@ -57,7 +57,6 @@ class TesteAdapter extends AbstractAdapter
     public function authenticate()
     {
     	$result = $this->authenticateLdap();
-    	var_dump($result);
     	if (!$result->isValid()){
     		/*
     		 * TODO: log failure to file
