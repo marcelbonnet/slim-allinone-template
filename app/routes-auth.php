@@ -45,17 +45,8 @@ Route::map(['GET','POST'], '/login', function (SlimHttpRequest $request, SlimHtt
         $username = $request->getParsedBody()['slimUsername'];
         $password = $request->getParsedBody()['slimPassword']; //(new PasswordValidator())->rehash($request->getParsedBody()['slimPassword']);
         $result = $app->getContainer()["authenticator"]->authenticate($username, $password);
-        var_dump($result->getMessages());
+
         if ($result->isValid()) {
-            //redirect:
-//             Session::setUsername($username);
-// 			var_dump($app->getContainer()["authStorage"]->read());
-//         	$app->getContainer()["authStorage"]->write($username);
-//         	var_dump("DEPOIS " .$app->getContainer()["authStorage"]->read());
-//             var_dump("LOGIN " .$app->getContainer()["authenticator"]->hasIdentity());
-//             die();
-// 			var_dump("<p>LOGIN SESSION:</p>");
-//         	var_dump($_SESSION['slim_auth']);
    			return $app->getContainer()->view->render($response, 'home.html');
         } else {
         	$messages = $result->getMessages();

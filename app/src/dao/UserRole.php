@@ -19,7 +19,7 @@ class UserRole {
 	 * @Id 
 	 * @GeneratedValue 
 	 * @Column(type="integer")
-	 * @var string
+	 * @var integer
 	 */
 	protected $id;
 	

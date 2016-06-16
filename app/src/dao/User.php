@@ -19,7 +19,7 @@ class User {
 	 * @Id 
 	 * @GeneratedValue 
 	 * @Column(type="integer")
-	 * @var string
+	 * @var integer
 	 */
 	protected $id;
 	
@@ -28,6 +28,15 @@ class User {
 	 * @var string
 	 */
 	protected $username;
+	
+	/**
+	 * If the user is authenticated through LDAP, it must be null, because
+	 * we copy its username to this entity thus it is possible to associate its roles
+	 * varchar(255) must be enought for years of evolution of the password hash factor (bcrypt)
+	 * @Column(type="string", length=255, nullable=true)
+	 * @var string
+	 */
+	protected $passwordHash;
 	
 	
 	/**
@@ -89,6 +98,13 @@ class User {
 	public function setUserRoles($userRoles) {
 		$this->userRoles = $userRoles;
 	}
+	public function getPasswordHash() {
+		return $this->passwordHash;
+	}
+	public function setPasswordHash($passwordHash) {
+		$this->passwordHash = $passwordHash;
+	}
+	
 	
 	
 }

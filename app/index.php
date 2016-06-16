@@ -25,6 +25,7 @@ use DarthEv\Core\Config;
 use Zend\Authentication\AuthenticationService;
 use DarthEv\Core\app\SlimLdapAdapter;
 use DarthEv\Core\dao\DAO;
+use DarthEv\Core\app\LdapRdbmsAdapter;
 
 require_once 'vendor/autoload.php';
 
@@ -69,16 +70,25 @@ $acl = new Acl();
 // $adapter = new Zend\Authentication\Adapter\Ldap($options);
 
 /*
- * Teste de Adapter LDAP/Doctrine
+ * Custom Adapter
+ * Auth  via LDAP
+ * Authz via RDBMS
  */
-$adapter = new DarthEv\Core\app\TesteAdapter(
+/*
+     * @param string $credencialAttribute atrribute of $userEntity holding password
+     * @param integer $authType one of AUTHENTICATE_LDAP|AUTHENTICATE_RDBMS
+ */
+$adapter = new DarthEv\Core\app\LdapRdbmsAdapter(
 		Config::CONFIG_FILE,
 		DAO::em(),
 		"DarthEv\Core\dao\UserRole",
 		"role",
-// 		"user",
 		"DarthEv\Core\dao\User",
-		"username"
+		"username",
+		"passwordHash",
+		LdapRdbmsAdapter::AUTHENTICATE_RDBMS,
+		15,
+		PASSWORD_DEFAULT
 		);
 
 $container["authAdapter"] = $adapter;
@@ -99,28 +109,8 @@ $container["authAdapter"] = $adapter;
 $slimAuthProvider = new SlimAuthProvider();
 $slimAuthProvider->register($container);
 
-/* ****************************************************************************
- * Auth LDAP
- * http://framework.zend.com/manual/current/en/modules/zend.authentication.adapter.ldap.html
- * ****************************************************************************
- */
-//TODO Zend LDAP template.
-
-// remove it from here, belongs to login route:
-// $authenticator = $container["authenticator"];
-// $authTeste = $authenticator->authenticate("foobar","teste");
-// var_dump($authTeste);
-// var_dump( (new PasswordValidator())->rehash('teste') );
-
 $app->add(new Authorization( $container["auth"], $acl, new RedirectHandler("auth/notAuthenticated", "auth/notAuthorized") ));
 
-// var_dump("ID " . $container["auth"]->hasIdentity());
-// var_dump("authStorage " . $container["authStorage"]->read());
-// $s = new Session();
-//  var_dump($s);
-// $s->teste = 'OK';
-// var_dump($s->slim_auth);
-//  var_dump($container["auth"]->getStorage()->read()['role']);
 /*
  * Slim Flash
  * requires slim/flash
