@@ -13,7 +13,7 @@ It has some core files to code a clean MVC application.
 
 ## Authentication/Authorization Extension
 
-Added jeremykendall/slim-auth to support Zend Authentication and Acls.
+Added marcelbonnet/slim-auth to support Zend Authentication and Acls (based on the original jeremykendall/slim-auth, but planning long term support for different methods like LDAP and Doctrine RDBMS).
 
 The template is configured for RDBMS authentication and authorization.
 

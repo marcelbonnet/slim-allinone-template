@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "439b8992ac5e8c75681a7594e26dd0a2",
-    "content-hash": "2c66ca3d8c28f966f1804f92a9a80b85",
+    "hash": "2ed72fa123f1f2ee74dd4f33385725b9",
+    "content-hash": "bbd20f8d898ddcbe8bb42e48c696dc04",
     "packages": [
         {
             "name": "akrabat/rka-slim-session-middleware",
@@ -843,77 +843,20 @@
             "time": "2014-11-20 16:49:30"
         },
         {
-            "name": "jeremykendall/password-validator",
-            "version": "3.0.4",
+            "name": "marcelbonnet/slim-auth",
+            "version": "0.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jeremykendall/password-validator.git",
-                "reference": "d587cda384a4e272ae979c1271eb74559b02f401"
+                "url": "https://github.com/marcelbonnet/slim-auth.git",
+                "reference": "be49c8f827e9650902c1b5cd1b69fa1dfa7935fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeremykendall/password-validator/zipball/d587cda384a4e272ae979c1271eb74559b02f401",
-                "reference": "d587cda384a4e272ae979c1271eb74559b02f401",
+                "url": "https://api.github.com/repos/marcelbonnet/slim-auth/zipball/be49c8f827e9650902c1b5cd1b69fa1dfa7935fa",
+                "reference": "be49c8f827e9650902c1b5cd1b69fa1dfa7935fa",
                 "shasum": ""
             },
             "require": {
-                "ircmaxell/password-compat": "1.*",
-                "php": ">=5.3.7",
-                "wp-cli/php-cli-tools": "0.10.*"
-            },
-            "require-dev": {
-                "league/phpunit-coverage-listener": "~1.1",
-                "phpunit/phpunit": "4.*"
-            },
-            "bin": [
-                "bin/cost-check",
-                "bin/version-check"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "JeremyKendall\\Password\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Kendall",
-                    "homepage": "http://about.me/jeremykendall",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Password Validator validates password_hash generated passwords, rehashes passwords as necessary, and will upgrade legacy passwords.",
-            "homepage": "https://github.com/jeremykendall/password-validator",
-            "keywords": [
-                "password",
-                "password validation",
-                "password validator",
-                "password_hash",
-                "passwords",
-                "security"
-            ],
-            "time": "2016-01-26 11:36:57"
-        },
-        {
-            "name": "jeremykendall/slim-auth",
-            "version": "2.0.0-alpha+005",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jeremykendall/slim-auth.git",
-                "reference": "461f429588c4cf91a6a63482e36bac69b662f3c6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jeremykendall/slim-auth/zipball/eed945b55f5e69bf0ea94540e5d9ff7c9b517fe0",
-                "reference": "461f429588c4cf91a6a63482e36bac69b662f3c6",
-                "shasum": ""
-            },
-            "require": {
-                "jeremykendall/password-validator": "3.*",
                 "php": ">=5.5.0",
                 "zendframework/zend-authentication": "2.*",
                 "zendframework/zend-permissions-acl": "2.*",
@@ -930,7 +873,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "JeremyKendall\\Slim\\Auth\\": "src/"
+                    "marcelbonnet\\Slim\\Auth\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -939,13 +882,13 @@
             ],
             "authors": [
                 {
-                    "name": "Jeremy Kendall",
-                    "homepage": "http://about.me/jeremykendall",
-                    "role": "Developer"
+                    "name": "Marcel Bonnet",
+                    "homepage": "https://github.com/marcelbonnet",
+                    "role": "developer"
                 }
             ],
             "description": "Authorization and authentication for the Slim Framework using ZF2 Authentication and Acl components",
-            "homepage": "https://github.com/jeremykendall/slim-auth",
+            "homepage": "https://github.com/marcelbonnet/slim-auth",
             "keywords": [
                 "Authentication",
                 "Zend Framework",
@@ -956,7 +899,7 @@
                 "zend",
                 "zf2"
             ],
-            "time": "2016-01-23 15:17:28"
+            "time": "2016-06-24 05:06:53"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -1553,16 +1496,16 @@
         },
         {
             "name": "tuupola/slim-basic-auth",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tuupola/slim-basic-auth.git",
-                "reference": "f45cd99f750b3ff8fbedf432b00eda5836d3cd8d"
+                "reference": "c219d8d9e40433fc7449f8034c15d473d11b4e11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tuupola/slim-basic-auth/zipball/f45cd99f750b3ff8fbedf432b00eda5836d3cd8d",
-                "reference": "f45cd99f750b3ff8fbedf432b00eda5836d3cd8d",
+                "url": "https://api.github.com/repos/tuupola/slim-basic-auth/zipball/c219d8d9e40433fc7449f8034c15d473d11b4e11",
+                "reference": "c219d8d9e40433fc7449f8034c15d473d11b4e11",
                 "shasum": ""
             },
             "require": {
@@ -1570,8 +1513,8 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.3",
-                "slim/slim": "^3.0",
-                "squizlabs/php_codesniffer": "^2.3"
+                "squizlabs/php_codesniffer": "^2.3",
+                "zendframework/zend-diactoros": "^1.3"
             },
             "type": "library",
             "autoload": {
@@ -1590,14 +1533,14 @@
                     "homepage": "http://www.appelsiini.net/"
                 }
             ],
-            "description": "HTTP Basic Authentication Middleware for Slim Framework",
+            "description": "PSR-7 HTTP Basic Authentication Middleware",
             "homepage": "http://www.appelsiini.net/projects/slim-basic-auth",
             "keywords": [
                 "auth",
                 "middleware",
-                "slim"
+                "psr-7"
             ],
-            "time": "2016-04-25 12:24:28"
+            "time": "2016-05-20 12:21:44"
         },
         {
             "name": "twig/twig",
@@ -1659,56 +1602,6 @@
                 "templating"
             ],
             "time": "2016-05-30 09:11:59"
-        },
-        {
-            "name": "wp-cli/php-cli-tools",
-            "version": "v0.10.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wp-cli/php-cli-tools.git",
-                "reference": "037a010441a5c220cd1df26cdc9b20ad73408356"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/php-cli-tools/zipball/037a010441a5c220cd1df26cdc9b20ad73408356",
-                "reference": "037a010441a5c220cd1df26cdc9b20ad73408356",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">= 5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "cli": "lib/"
-                },
-                "files": [
-                    "lib/cli/cli.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "James Logsdon",
-                    "email": "jlogsdon@php.net",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Daniel Bachhuber",
-                    "email": "daniel@handbuilt.co",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Console utilities for PHP",
-            "homepage": "http://github.com/wp-cli/php-cli-tools",
-            "keywords": [
-                "cli",
-                "console"
-            ],
-            "time": "2015-08-10 12:46:19"
         },
         {
             "name": "zendframework/zend-authentication",
@@ -2140,7 +2033,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "jeremykendall/slim-auth": 15,
         "akrabat/rka-slim-session-middleware": 5
     },
     "prefer-stable": false,

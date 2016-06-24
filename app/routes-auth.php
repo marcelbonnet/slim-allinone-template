@@ -6,8 +6,6 @@ use \Slim\Http\Request as SlimHttpRequest;
 use \Slim\Http\Response as SlimHttpResponse;
 use DarthEv\Core\app\Route;
 use DarthEv\Core\app\App;
-use JeremyKendall\Password\PasswordValidator;
-use DarthEv\Core\Session;
 
 
 Route::group('/auth', function() {
