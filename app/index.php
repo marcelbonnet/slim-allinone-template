@@ -87,8 +87,8 @@ $adapter = new DarthEv\Core\app\LdapRdbmsAdapter(
 		"username",
 		"passwordHash",
 		LdapRdbmsAdapter::AUTHENTICATE_RDBMS,
-		15,
-		PASSWORD_DEFAULT
+		Config::get()['rdbmsauth']['hashFactor'],
+		Config::get()['rdbmsauth']['hashAlgo']
 		);
 
 $container["authAdapter"] = $adapter;

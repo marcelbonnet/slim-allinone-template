@@ -1,45 +1,5 @@
 {% extends "home.html" %}
 {% block content %}
-<style>
-body {
-  background-color: #eee;
-}
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-</style>
 
 {% set div_error_class='hide' %}
 
@@ -47,6 +7,137 @@ body {
     {% set div_error_class='' %}
 {% endif %}
 
+<style>
+[data-user-is] {
+	display: none !important;
+}
+
+[data-user-is=""] {
+	display: block !important;
+}
+
+[data-user-is=""][data-display="inline"] {
+	display: inline !important;
+}
+
+[data-user-is-not] {
+	display: block !important;
+}
+
+[data-user-is-not][data-display="inline"] {
+	display: inline !important;
+}
+
+[data-user-is-not=""] {
+	display: none !important;
+}
+</style>
+
+</head>
+
+<body class='ui_charcoal login-page application navless'>
+	<div class='container navless-container'>
+		<div class='content'>
+			<div class='flash-container'></div>
+
+			<div class='row'>
+				<div class='col-sm-5 pull-right'>
+					<div>
+						<div class='login-box'>
+							<div class='login-heading'>
+								<h3>Sign in</h3>
+							</div>
+							<div class='login-body'>
+								<ul class='nav-links'>
+									<li class='active'><a data-toggle="tab"
+										href="#tab-ldapmain">LDAP</a></li>
+									<li><a data-toggle="tab" href="#tab-signin">Standard</a></li>
+								</ul>
+								<div class='tab-content'>
+									<div class='active tab-pane' id='tab-ldapmain'>
+										<form id="new_ldap_user"
+											action="{{path_for('login')}}" accept-charset="UTF-8"
+											method="post">
+											
+											<input name="utf8" type="hidden" value="&#x2713;" />
+											
+											<input type="hidden" name="authenticity_token"
+												value="{{username}}" />
+											
+											<input type="text" name="slimUsername" id="slimUsername"
+												class="form-control top" placeholder="LDAP Login"
+												autofocus="autofocus" /> 
+											
+											<input type="password"
+												name="slimPassword" id="slimPassword" class="form-control bottom"
+												placeholder="Password" />
+											<div class='remember-me checkbox'>
+												<label for='remember_me'> <input type="checkbox"
+													name="remember_me" id="remember_me" value="1" /> 
+													<span>Remember me</span>
+												</label>
+											</div>
+											<button name="button" type="submit" class="btn-save btn">Sign in</button>
+										</form>
+
+
+									</div>
+									<div class='tab-pane' id='tab-signin'>
+										<form class="new_user" id="new_user" action="/users/sign_in"
+											accept-charset="UTF-8" method="post">
+											<input name="utf8" type="hidden" value="&#x2713;" />
+											
+											<input
+												type="hidden" name="authenticity_token"
+												value="" />
+												
+											<input
+												class="form-control top" placeholder="Username or Email"
+												autofocus="autofocus" autocapitalize="off" autocorrect="off"
+												type="text" name="user[login]" id="user_login" />
+												
+											<input
+												class="form-control bottom" placeholder="Password"
+												type="password" name="user[password]" id="user_password" />
+											<div class='remember-me checkbox'>
+												<label for='user_remember_me'> 
+												
+												    <input name="user[remember_me]" type="hidden" value="0" />
+													
+													<input type="checkbox" value="1" name="user[remember_me]"
+													id="user_remember_me" /> <span>Remember me</span>
+												</label>
+												
+												<div class='pull-right'>
+													<a href="#">Forgot your password?</a>
+												</div>
+											</div>
+											<div>
+												<input type="submit" name="commit" value="Sign in"
+													class="btn btn-save" />
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class='col-sm-7 brand-holder pull-left'>
+					<h1>Slim All In One Template</h1>
+					<h3>{% include "app_name" %} Login</h3>
+					<p>Other bla bla bla bla that makes us happy.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+<!-- 
 <div class="col-md-12">
   <form class="form-signin" method="POST" action="{{path_for('login')}}">
     <h2 class="form-signin-heading">{% include "app_name" %} Login</h2>
@@ -64,6 +155,7 @@ body {
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
   </form>
-</div> <!-- /container -->
+</div>
+ -->
 
 {% endblock %}
