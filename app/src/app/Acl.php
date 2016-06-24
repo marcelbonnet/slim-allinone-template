@@ -6,6 +6,7 @@ use DarthEv;
 
 /**
  * ACL for Slim Auth Implementation Example.
+ * @see https://github.com/marcelbonnet/slim-allinone-template
  */
 class Acl extends ZendAcl
 {
